@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <meta name="description" content="Study-first GATE DA 2027 preparation with 89 daily plans, expanded step-by-step concept lessons, hands-on learning checks and backend progress tracking." />
+  <title>StudyOS · GATE DA 2027</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <section id="auth-screen" class="auth-screen" hidden>
+    <div class="auth-decoration" aria-hidden="true">∑</div>
+    <div class="auth-layout">
+      <div class="auth-intro">
+        <div class="auth-brand"><span class="brand-mark">∑</span><strong>STUDY<span class="brand-accent">OS</span></strong></div>
+        <div class="auth-kicker">GATE DATA SCIENCE & AI · 2027</div>
+        <h1>Learn together.<br><span>Progress individually.</span></h1>
+        <p>One distraction-free learning space. Your own 89-day plan, 158 detailed lessons, GATE-style practice, and progress that stays tied to your account.</p>
+        <div class="auth-benefits"><span>✓ Private progress</span><span>✓ Saved quiz scores</span><span>✓ Personal revision cards</span></div>
+        <div class="auth-quote">Small steps, repeated every day, build mastery.</div>
+      </div>
+      <div class="auth-card">
+        <div class="auth-card-header"><div class="auth-avatar">✦</div><h2 id="auth-title">Welcome back</h2><p id="auth-subtitle">Sign in to pick up where you left off.</p></div>
+        <div class="auth-switch" role="group" aria-label="Account mode"><button id="auth-mode-login" class="active" type="button">Log in</button><button id="auth-mode-register" type="button">Create account</button></div>
+        <form id="auth-form" autocomplete="on">
+          <label class="auth-field" id="auth-display-wrap" hidden>Display name<input id="auth-display" type="text" maxlength="40" autocomplete="name" placeholder="Your name" /></label>
+          <label class="auth-field">Username<input id="auth-username" type="text" required minlength="3" maxlength="24" autocomplete="username" autocapitalize="off" spellcheck="false" placeholder="e.g. gatelearner" /></label>
+          <label class="auth-field">Password<input id="auth-password" type="password" required minlength="10" maxlength="128" autocomplete="current-password" placeholder="At least 10 characters" /></label>
+          <p id="auth-help" class="auth-help">Your progress is available on any device when you log into this same hosted website.</p>
+          <p id="auth-error" class="auth-error" role="alert" hidden></p>
+          <button id="auth-submit" class="auth-submit" type="submit">Log in to StudyOS <span>→</span></button>
+        </form>
+        <div class="auth-footer">Your study history is private to your account.<br />Save a backup from Settings whenever you need one.</div>
+      </div>
+    </div>
+  </section>
+  <div class="app-shell" id="app" hidden>
+    <aside class="sidebar" id="sidebar">
+      <button type="button" class="brand" data-view="today" aria-label="Go to Today">
+        <span class="brand-mark">∑</span>
+        <span><strong>STUDY<span class="brand-accent">OS</span></strong><small>GATE DA 2027</small></span>
+      </button>
+      <div class="side-section-label">WORKSPACE</div>
+      <nav class="nav" aria-label="Main navigation" id="nav">
+        <button data-view="today" class="nav-button active"><span class="nav-icon">◉</span><span>Today</span></button>
+        <button data-view="roadmap" class="nav-button"><span class="nav-icon">▦</span><span>89-day roadmap</span></button>
+        <button data-view="syllabus" class="nav-button"><span class="nav-icon">▤</span><span>Syllabus & lessons</span></button>
+        <button data-view="practice" class="nav-button"><span class="nav-icon">◈</span><span>Practice & mocks</span></button>
+        <button data-view="labs" class="nav-button"><span class="nav-icon">⌁</span><span>Concept labs</span></button>
+        <button data-view="flashcards" class="nav-button"><span class="nav-icon">▧</span><span>Active recall cards</span></button>
+        <button data-view="insights" class="nav-button"><span class="nav-icon">▥</span><span>Performance</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="side-progress">
+          <div class="side-progress-caption"><span>YOUR SYLLABUS</span><span id="side-percent">0%</span></div>
+          <div class="progress-track"><div class="progress-fill" id="side-bar"></div></div>
+          <p><b id="side-done">0</b> / <span id="side-total">158</span> concepts mastered</p>
+        </div>
+        <button data-view="settings" class="nav-button settings-button"><span class="nav-icon">⚙</span><span>Settings & backup</span></button>
+        <div class="side-footer">Made for deep work, not scrolling.</div>
+      </div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar">
+        <div class="mobile-brand"><button id="menu-toggle" class="icon-button" aria-label="Toggle navigation">☰</button><strong>STUDYOS</strong></div>
+        <div class="breadcrumbs" id="breadcrumbs">Preparation / Today</div>
+        <div class="top-actions">
+          <span class="top-chip" id="top-date">05 Nov 2026 → 01 Feb 2027</span><span class="user-chip" id="account-display"></span><button class="top-text-btn logout-btn" id="logout-button" type="button" title="Sign out of your account">Log out</button>
+          <button class="top-text-btn" id="focus-toggle" title="Hide navigation for focused reading">Focus mode</button>
+        </div>
+      </header>
+      <main id="main" class="main" tabindex="-1" aria-live="polite">
+        <div class="loading-view"><div class="loading-pulse"></div><h2>Opening your preparation workspace</h2><p>Loading lessons, questions and saved progress…</p></div>
+      </main>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>

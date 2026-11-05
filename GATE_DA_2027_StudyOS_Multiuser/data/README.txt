@@ -1,0 +1,1 @@
+Private database files are created at runtime. Never commit data/accounts.sqlite3, its WAL or SHM files, or JSON user backups to GitHub. For remote hosting, mount a PERSISTENT volume and set STUDYOS_DATA_DIR to the volume path, e.g. /data. This directory is intentionally excluded by .gitignore.
