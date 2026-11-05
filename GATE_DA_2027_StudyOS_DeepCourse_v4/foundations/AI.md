@@ -1,0 +1,40 @@
+# Artificial Intelligence: the foundations course
+
+## 1. What does an intelligent agent actually do?
+Artificial intelligence studies systems that represent situations, choose actions, search for outcomes, reason from knowledge and handle uncertainty. A useful starting model is an agent: it observes information about an environment, maintains some representation of the situation, and selects actions to achieve a goal. In an exam search problem, formalize the state space, initial state, allowable actions, transition model, goal test and path cost. An apparently simple puzzle can become a search problem containing thousands of states if your state representation includes unnecessary details.
+
+For route planning, a state can be the current location, an action can be travelling along a permitted road, and a path cost can be travel time. A path is a sequence of actions linking the start to a goal. Search algorithms differ in how they choose the next frontier state. Their guarantees depend on assumptions: completeness means finding a solution if one exists under specified conditions; optimality means finding a least-cost solution under specified assumptions. Always ask whether weights are uniform, positive, or potentially negative.
+
+## 2. Uninformed search: frontier order changes everything
+Breadth-first search (BFS) processes frontier states in first-in-first-out order using a queue. It expands depth 0, then depth 1, then depth 2, so it finds a shortest path by number of edges when each move has equal cost. Its memory can grow exponentially with depth in a branching tree. Depth-first search (DFS) uses recursion or last-in-first-out stack behaviour and goes deep before backtracking. It often uses less memory than BFS in tree-search settings but may miss shallow solutions for a long time; in infinite spaces without repeated-state handling it may not terminate.
+
+Uniform-cost search (UCS) uses a priority queue ordered by accumulated path cost g(n), so it generalizes BFS when edge costs differ. If A→B cost 1, B→G cost 10, and A→G cost 5, UCS prefers the direct cost-5 path even though the two-edge path initially looks tempting. A cost of 1+10=11 is not improved by taking more edges. With nonnegative costs and appropriate handling, UCS finds a least-cost goal. Beware confusing the cheapest *frontier node so far* with the final cheapest solution before goal selection.
+
+## 3. Informed search: estimate the distance to the goal
+A heuristic h(n) estimates remaining cost from n to a goal. Greedy best-first search prioritizes h(n) and can be misled because it ignores cost already spent. A* uses f(n)=g(n)+h(n), combining known past cost and estimated future cost. An admissible heuristic never overestimates true remaining cost; a consistent heuristic also satisfies a triangle-like inequality h(n)≤c(n,n′)+h(n′). These properties support optimality guarantees under the appropriate A* variant.
+
+Suppose node X has g=4 and h=3, so f=7; node Y has g=6 and h=0, so f=6. A* expands Y first if both are in the priority queue. This does not mean Y has the cheaper route *so far*; it has the cheaper combined estimate. A heuristic of zero everywhere reduces A* to uniform-cost search. Recognize what changes when h is informative, inadmissible or inconsistent.
+
+## 4. Adversarial search: plan against another decision-maker
+In games like tic-tac-toe, each player's move changes the next player's options. Minimax models alternating MAX and MIN players with evaluation values at leaf states. MAX chooses a move with the highest guaranteed outcome assuming MIN acts optimally. Suppose two branches lead to MIN leaves [3,8] and [5,6]. MIN returns 3 from the first and 5 from the second; MAX chooses the second branch because its guaranteed value 5 is larger. It's a recursive calculation, not a guess at the opponent's personality.
+
+Alpha-beta pruning avoids exploring subtrees that cannot change the minimax result. Alpha tracks the best guaranteed value for MAX along the path; beta tracks an upper bound imposed by MIN. When alpha≥beta, a branch can be skipped because it cannot improve the relevant choice. Move ordering affects how much pruning happens, but correct alpha-beta produces the same minimax value as full search. Practice drawing a three-level tree and propagating min/max numbers before learning shortcuts.
+
+## 5. Propositional logic: exact meanings of AND, OR and implication
+A proposition is a statement with a truth value. The connectives ¬, ∧, ∨ and → build more complex statements. p→q is logically equivalent to ¬p∨q; it is false only when p is true and q false. This truth-functional implication does not by itself imply causation. De Morgan's laws say ¬(p∧q)≡¬p∨¬q and ¬(p∨q)≡¬p∧¬q. Build truth tables rather than relying on English intuition for compound expressions.
+
+A knowledge base (KB) entails a claim α when every model in which KB is true also makes α true. If KB contains P and P→Q, then Q follows via modus ponens. Entailment describes the semantic relationship; an inference rule is a syntactic way to derive conclusions. Soundness means inferred claims are entailed; completeness (relative to a logic) means entailed claims can be inferred. Keep the difference between "the knowledge is true" and "the reasoning procedure proves it" clear.
+
+## 6. First-order logic adds objects and quantifiers
+Propositional logic treats whole statements as indivisible symbols; first-order logic adds predicates about objects and quantifiers ∀ (for all) and ∃ (there exists). Quantifier order is essential. ∀x∃y Loves(x,y) says everyone loves someone, possibly a different person each time. ∃y∀x Loves(x,y) says one particular person is loved by everyone. These are not equivalent. Negating ∀xP(x) gives ∃x¬P(x); negating ∃xP(x) gives ∀x¬P(x). Practice translating sentences into formulas and back into ordinary language to avoid scope errors.
+
+## 7. Reasoning under uncertainty with Bayesian networks
+A Bayesian network is a directed acyclic graph encoding dependencies among random variables. Each node has a conditional probability distribution given its parents. For a chain A→B→C, the joint distribution factorizes as P(A)P(B|A)P(C|B). The graph also encodes conditional independences: in the chain, A and C are conditionally independent given B under the network Markov assumptions. In a fork A←B→C, conditioning on common parent B blocks the path between children; in a collider A→B←C, conditioning on B can *open* a path between parents. This collider behaviour surprises beginners and is highly testable.
+
+Exact inference can sum out hidden variables. For example, P(C)=Σ_a Σ_b P(a)P(b|a)P(C|b). Variable elimination combines factors and sums out hidden variables strategically; elimination order can greatly affect intermediate table size. Approximate inference uses sampling, such as drawing observations from the network and estimating event proportions. For 230 successes among 1000 independent samples, probability estimate is 0.23 and sampling error decreases as effective sample size grows. Sampling trades exactness for feasible computation on large networks.
+
+## 8. An integrated planning example
+A delivery robot starts at S, can move to A at cost 2 or B at cost 5, then can reach G from A at cost 6 or from B at cost 1. BFS sees both S→A→G and S→B→G as two-edge paths and may return the first, costing 8. Uniform-cost search compares total costs and chooses S→B→G at cost 6. With a valid heuristic, A* can guide the same optimal decision while exploring fewer nodes. This example shows why the problem's cost definition, not an algorithm's name alone, determines the correct method.
+
+## 9. Independent questions and answers
+Exercise A: The path cost g=3 and heuristic h=4 give A* priority f=7. Exercise B: A consistent heuristic must satisfy h(n)≤c(n,n′)+h(n′). Exercise C: Negation of "Every student passed" is "At least one student did not pass." Exercise D: For A→B→C, conditioning on B blocks the A–C trail. Exercise E: If a game MIN node has leaf scores 2,9 and 6, its value is 2. Draw state graphs and truth tables rather than memorizing words alone.
